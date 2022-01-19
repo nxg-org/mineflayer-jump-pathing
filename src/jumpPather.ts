@@ -2,7 +2,7 @@ import { Entity } from "prismarine-entity";
 import { Vec3 } from "vec3";
 import { Bot, createBot, EquipmentDestination } from "mineflayer";
 import utilPlugin, { AABB, AABBUtils } from "@nxg-org/mineflayer-util-plugin";
-import test from "../../tracker/lib";
+import test from "@nxg-org/mineflayer-tracker";
 import EventEmitter from "events";
 import { emptyVec, forwardSprintJump, PIOver2, PIOver8, TestEntity, TestState } from "./constants";
 const { PlayerState } = require("prismarine-physics");
