@@ -5,6 +5,7 @@ import utilPlugin, { AABB, AABBUtils } from "@nxg-org/mineflayer-util-plugin";
 import test from "@nxg-org/mineflayer-tracker";
 import EventEmitter from "events";
 import { emptyVec, forwardSprintJump, PIOver2, PIOver8, TestEntity, TestState } from "./constants";
+import { BaseGoal } from "./goals";
 const { PlayerState } = require("prismarine-physics");
 
 // interface Controls {
@@ -31,7 +32,7 @@ function GoalToPosDist(target: Vec3, origin: Vec3) {
 
 export class JumpPathing extends EventEmitter {
     public searchDepth: number;
-    public target: { goal: TestEntity; dynamic: boolean; predict: boolean } | null;
+    public goal: BaseGoal | null;
     public nextLandingPosition?: Vec3;
     public plannedJumps: Vec3[];
     private potentialLandingPositions: TestState[];
@@ -39,18 +40,18 @@ export class JumpPathing extends EventEmitter {
     constructor(private bot: Bot) {
         super();
         this.searchDepth = 2;
-        this.target = null;
+        this.goal = null;
         this.plannedJumps = [];
         this.potentialLandingPositions = [];
 
         this.on("reachedGoal", this.stop);
     }
 
-    goto(goal: TestEntity, dynamic: boolean = false, predict: boolean = false) {
-        this.target = { goal, dynamic, predict };
-        if (this.target.dynamic) {
+    goto(goal: BaseGoal) {
+        this.goal = goal;
+        if (this.goal.dynamic) {
             this.bot.on("physicsTick", this.perTick);
-            this.bot.tracker.trackEntity(this.target.goal as Entity);
+            this.bot.tracker.trackEntity(this.goal.target as Entity);
         } else {
             this.resetInfo();
             this.simulateJump(new PlayerState(this.bot, forwardSprintJump), this.searchDepth);
@@ -64,7 +65,7 @@ export class JumpPathing extends EventEmitter {
     }
 
     private perTick = () => {
-        if (this.bot.entity.onGround && this.target?.dynamic) {
+        if (this.bot.entity.onGround && this.goal?.dynamic) {
             this.resetInfo();
             this.simulateJump(new PlayerState(this.bot, forwardSprintJump), this.searchDepth);
         }
@@ -91,7 +92,7 @@ export class JumpPathing extends EventEmitter {
     performJumps = async () => {
         if (this.plannedJumps.length === 0) {
             this.resetInfo();
-            this.emit("invalidPath", this.target);
+            this.emit("invalidPath", this.goal);
             return;
         }
         while (this.bot.entity.position.distanceTo(this.plannedJumps[0]) > 1) {
@@ -99,7 +100,7 @@ export class JumpPathing extends EventEmitter {
                 this.resetInfo();
                 this.simulateJump(new PlayerState(this.bot, forwardSprintJump), this.searchDepth);
             }
-            if (this.nextLandingPosition && this.target) {
+            if (this.nextLandingPosition && this.goal) {
                 this.bot.setControlState("forward", true);
                 this.bot.setControlState("sprint", true);
                 this.bot.setControlState("jump", true);
@@ -108,25 +109,15 @@ export class JumpPathing extends EventEmitter {
             await this.bot.waitForTicks(1);
         }
         this.resetInfo();
-        this.emit("reachedGoal", this.target);
+        this.emit("reachedGoal", this.goal);
     };
 
     simulateJump(playerState: any, searchDepth: number, parentJumpPos?: TestState) {
-        if (!this.target || !this.target.goal.isValid) return;
+        if (!this.goal) return;
 
         let bestLandingPos: TestState;
-        let targetPos: Vec3 = this.target.goal.position;
-        let deltaPos: Vec3 = targetPos.minus(playerState.pos);
-
-        const speed = this.bot.tracker.getEntitySpeed(this.target.goal as Entity);
-
-        //prediction algorithm. Cobbled it together but it works decently well. Leaving it as is.
-        if (this.target.predict && !!speed && !speed.equals(emptyVec)) {
-            const base = Math.round(Math.sqrt(deltaPos.x ** 2 + deltaPos.y ** 2 + deltaPos.z ** 2));
-            const tickCount = Math.round((base * 8) / Math.sqrt(base));
-            targetPos = this.target.goal.position.plus(speed.scaled(isNaN(tickCount) ? 0 : tickCount));
-            deltaPos = targetPos.minus(playerState.pos);
-        }
+        const targetPos: Vec3 = this.goal.goalPos;
+        const deltaPos: Vec3 = targetPos.minus(playerState.pos);
 
         //assign new yaw for base state.
         playerState.yaw = Math.atan2(-deltaPos.x, -deltaPos.z);

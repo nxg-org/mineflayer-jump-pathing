@@ -1,8 +1,9 @@
 import { createBot, EquipmentDestination } from "mineflayer";
-import utilPlugin from "@nxg-org/mineflayer-util-plugin"
-import tracker from "@nxg-org/mineflayer-tracker"
+import utilPlugin from "@nxg-org/mineflayer-util-plugin";
+import tracker from "@nxg-org/mineflayer-tracker";
 import { Vec3 } from "vec3";
 import { JumpPathing } from "./jumpPather";
+import { GoalFactory } from "./goals";
 
 const bot = createBot({
     username: "jump-pathing",
@@ -11,14 +12,12 @@ const bot = createBot({
     version: "1.16.5",
 });
 
-bot.physics.yawSpeed = 50
+bot.physics.yawSpeed = 50;
 
 bot.loadPlugin(utilPlugin);
 bot.loadPlugin(tracker);
 
-
 const clas = new JumpPathing(bot);
-
 
 function parseMessage(username: string, message: string) {
     console.log("<" + username + "> " + message);
@@ -55,30 +54,22 @@ function parseMessage(username: string, message: string) {
             if (msg.length === 2) {
                 const entity = bot.nearestEntity((e) => !!e.username?.includes(msg[1]) || !!e.name?.includes(msg[1]));
                 if (!entity) return;
-                clas.goto(entity, false);
+                const goal = GoalFactory.gotoEntity(bot, entity);
+                clas.goto(goal);
             } else {
-                clas.goto(
-                    {
-                        type: "player",
-                        position: new Vec3(parseInt(msg[1]), parseInt(msg[2]), parseInt(msg[3])),
-                        height: 1.8,
-                        width: 0.6,
-                        isValid: true,
-                    },
-                    false
-                );
+                const goal1 = GoalFactory.gotoPos(bot, new Vec3(parseInt(msg[1]), parseInt(msg[2]), parseInt(msg[3])));
+                clas.goto(goal1);
             }
             break;
         case "follow":
             const entity = bot.nearestEntity((e) => !!e.username?.includes(msg[1]) || !!e.name?.includes(msg[1]));
             if (!entity) return;
-            if (parseInt(msg[2])) clas.searchDepth = parseInt(msg[2]);
-            clas.goto(entity, true, true);
+            const goal2 = GoalFactory.followEntity(bot, entity, parseInt(msg[2]), true);
+            if (parseInt(msg[3])) clas.searchDepth = parseInt(msg[3]);
+            clas.goto(goal2);
 
             break;
     }
 }
-
-
 
 bot.on("chat", parseMessage);
