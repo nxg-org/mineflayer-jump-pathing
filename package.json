@@ -1,6 +1,6 @@
 {
     "name": "@nxg-org/mineflayer-jump-pathing",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Proof of concept jumpsprint pathfinding.",
     "keywords": [
         "mineflayer",
