@@ -25,7 +25,7 @@
   integrity sha512-tXq4f64pUcqIWQviNLHJ4m93ClgN15CmZa0Bx2gCEktigDhNh0xAT+m6AaGjlqwRsGR5rmWbvOfu/e9pQ8Yv2Q==
   dependencies:
     "@nxg-org/mineflayer-trajectories" "^1.0.15"
-    "@nxg-org/mineflayer-util-plugin" "^1.3.15"
+    "@nxg-org/mineflayer-util-plugin" "^1.3.14"
     minecraft-data "^2.97.0"
     mineflayer "^3.11.2"
     prismarine-block "^1.10.3"
@@ -38,7 +38,7 @@
   resolved "https://registry.yarnpkg.com/@nxg-org/mineflayer-trajectories/-/mineflayer-trajectories-1.0.15.tgz#c747bc672a1c71d73bfa8332cb7e1236978892fc"
   integrity sha512-O3PGfGZ7/GbUtn4y2e5qXgiFYYRcejvFVr1WJNOP1hW9cskKFeR3M4DEapVgb7AlPKzjYryYIesYtVWysLwY5A==
   dependencies:
-    "@nxg-org/mineflayer-util-plugin" "^1.3.15"
+    "@nxg-org/mineflayer-util-plugin" "^1.3.14"
     minecraft-data "^2.97.0"
     mineflayer "^3.11.2"
     prismarine-block "^1.10.3"
@@ -47,9 +47,9 @@
     vec3 "^0.1.7"
 
 "@nxg-org/mineflayer-util-plugin@^1.3.15":
-  version "1.3.14"
-  resolved "https://registry.yarnpkg.com/@nxg-org/mineflayer-util-plugin/-/mineflayer-util-plugin-1.3.14.tgz#97bfa85fa56fb21053105a2cfa39f2a2015e27c6"
-  integrity sha512-Flw5tAK/OdKE8o3UJzH1MRj6VC4hm1dyZVCh9cWPSW6svU4H0Ah99hgDBAjFv2JyQDp03G+Odh9NBP/XSUR7jg==
+  version "1.3.15"
+  resolved "https://registry.yarnpkg.com/@nxg-org/mineflayer-util-plugin/-/mineflayer-util-plugin-1.3.15.tgz#e490bcfad307a1a5bcfc06d4e75b24ac5965636b"
+  integrity sha512-WKtqn81hYychtE5CfF4eA15eeFim/sudTI3qrty5BdPrvLcldWl4AgGLx/Z8eRYUWmiGAVSFH9nYNPkN1m2x0A==
   dependencies:
     minecraft-data "^2.97.0"
     mineflayer "^3.11.2"
