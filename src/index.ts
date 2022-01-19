@@ -15,3 +15,6 @@ export default function plugin(bot: Bot) {
     if (!bot.tracker || !bot.projectiles) bot.loadPlugin(trackerPlugin);
     bot.jumpPather = new JumpPathing(bot);
 }
+
+
+export {GoalFactory} from "./goals"
