@@ -1,11 +1,11 @@
 import { createBot, EquipmentDestination } from "mineflayer";
 import utilPlugin from "@nxg-org/mineflayer-util-plugin"
-import tracker from "../../tracker"
+import tracker from "@nxg-org/mineflayer-tracker"
 import { Vec3 } from "vec3";
 import { JumpPathing } from "./jumpPather";
 
 const bot = createBot({
-    username: "pvp-testing",
+    username: "jump-pathing",
     host: "minecraft.next-gen.dev",
     port: 25565,
     version: "1.16.5",

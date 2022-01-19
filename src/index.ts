@@ -1,6 +1,6 @@
 
 import utilPlugin from "@nxg-org/mineflayer-util-plugin";
-import trackerPlugin from "../../tracker";
+import trackerPlugin from "@nxg-org/mineflayer-tracker";
 import { Bot } from "mineflayer";
 import { JumpPathing } from "./jumpPather";
 
