@@ -18,7 +18,7 @@
     "scripts": {
         "build": "npx tsc",
         "prepublish": "npm run build",
-        "test": "node --trace-warnings lib/genTest.js pvp-testing"
+        "test": "node --trace-warnings lib/example.js"
     },
     "dependencies": {
         "@nxg-org/mineflayer-tracker": "^1.0.1",

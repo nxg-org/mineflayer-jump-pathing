@@ -20,11 +20,6 @@ export abstract class BaseGoal extends EventEmitter implements BaseGoalOptions {
     abstract get goalPosRaw(): Vec3;
     abstract goalReached(): boolean;
     
-    direction(pos: Vec3) {
-        if (this.target instanceof Vec3)
-        return Math.atan2(this.target.x - pos.x, this.target.z - pos.z);
-    }
-    
 
     predictiveFunction?: PredictiveFunction;
 }
@@ -78,10 +73,11 @@ export class EntityGoalPredictive extends BaseGoal {
     constructor(
         bot: Bot,
         public target: Entity,
-        readonly wantedDistance: number = 1,
+        public readonly wantedDistance: number = 1,
+        public ticksToPredict: number = 10,
         public predictiveFunction: PredictiveFunction = (delta, pos, vel) => {
             const base = Math.round(Math.sqrt(delta.x ** 2 + delta.y ** 2 + delta.z ** 2));
-            const tickCount = Math.round((base * 8) / Math.sqrt(base));
+            const tickCount = Math.round((base * this.ticksToPredict) / Math.sqrt(base));
             return pos.plus(vel.scaled(isNaN(tickCount) ? 0 : tickCount));
         }
     ) {

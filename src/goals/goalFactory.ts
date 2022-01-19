@@ -5,11 +5,18 @@ import type { Bot } from "mineflayer";
 import type { Vec3 } from "vec3";
 
 export namespace GoalFactory {
+    export function followEntity(bot: Bot, target: Entity, wantedDistance: number = 1) {
+        return new goals.EntityGoalDynamic(bot, target, wantedDistance);
+    }
 
-
-    export function followEntity(bot: Bot, target: Entity, wantedDistance: number = 1, predictive: boolean = false, predictiveFunction?: PredictiveFunction) {
-        if (predictive) return new goals.EntityGoalPredictive(bot, target, wantedDistance, predictiveFunction);
-        else return new goals.EntityGoalDynamic(bot, target, wantedDistance);
+    export function predictEntity(
+        bot: Bot,
+        target: Entity,
+        wantedDistance: number = 1,
+        ticksToPredict: number = 1,
+        predictiveFunction?: PredictiveFunction
+    ) {
+        return new goals.EntityGoalPredictive(bot, target, wantedDistance, ticksToPredict, predictiveFunction);
     }
 
     export function gotoEntity(bot: Bot, target: Entity) {
@@ -21,21 +28,19 @@ export namespace GoalFactory {
     }
 
     export function inverseGoal(goal: goals.BaseGoal) {
-        return new goals.InverseGoal(goal)
+        return new goals.InverseGoal(goal);
     }
 }
 
-
-
 /**
  * usage:
- * 
+ *
  * const nonPredictive = GoalFactory.followEntity(bot, entity, false)
- * 
+ *
  * const predictive = GoalFactory.followEntity(bot, entity, true)
- * 
+ *
  * const staticEntity = GoalFactory.gotoEntity(bot, entity)
- * 
+ *
  * const staticPos = GoalFactory.gotoPos(bot, target)
- * 
+ *
  */

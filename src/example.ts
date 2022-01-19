@@ -7,9 +7,9 @@ import { GoalFactory } from "./goals";
 
 const bot = createBot({
     username: "jump-pathing",
-    host: "minecraft.next-gen.dev",
+    host: "localhost",
     port: 25565,
-    version: "1.16.5",
+    version: "1.17.1",
 });
 
 bot.physics.yawSpeed = 50;
@@ -64,9 +64,17 @@ function parseMessage(username: string, message: string) {
         case "follow":
             const entity = bot.nearestEntity((e) => !!e.username?.includes(msg[1]) || !!e.name?.includes(msg[1]));
             if (!entity) return;
-            const goal2 = GoalFactory.followEntity(bot, entity, parseInt(msg[2]), true);
+            const goal2 = GoalFactory.followEntity(bot, entity, parseInt(msg[2]));
             if (parseInt(msg[3])) clas.searchDepth = parseInt(msg[3]);
             clas.goto(goal2);
+
+            break;
+        case "predict":
+            const predictEntity = bot.nearestEntity((e) => !!e.username?.includes(msg[1]) || !!e.name?.includes(msg[1]));
+            if (!predictEntity) return;
+            const goal3 = GoalFactory.predictEntity(bot, predictEntity, parseInt(msg[2]), 10);
+            if (parseInt(msg[3])) clas.searchDepth = parseInt(msg[3]);
+            clas.goto(goal3);
 
             break;
     }
