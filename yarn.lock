@@ -262,9 +262,9 @@ macaddress@^0.5.1:
   integrity sha512-cYYBbT3b84hTEHssWE6OmsuqF/NiLXE2RGK9Sc9SwwE9kMoKrbaUAJtKs6ucd0FFgZjXE1Wm3hoGEEYas0N6EA==
 
 minecraft-data@^2.61.0, minecraft-data@^2.62.1, minecraft-data@^2.73.1, minecraft-data@^2.74.0, minecraft-data@^2.75.0, minecraft-data@^2.95.0, minecraft-data@^2.97.0, minecraft-data@^2.98.0:
-  version "2.106.0"
-  resolved "https://registry.yarnpkg.com/minecraft-data/-/minecraft-data-2.106.0.tgz#ad8d84e3e4e85f77d70b55f63606de80a6581f2d"
-  integrity sha512-eZ2AuR5FkM0Ai4OuIXwpNIdPOzC+Z75rdO/DKcTLwgIso2Z/YvDcdTaRD94ivCcTkVdkUg25mrt35KE651ckTA==
+  version "2.116.0"
+  resolved "https://registry.yarnpkg.com/minecraft-data/-/minecraft-data-2.116.0.tgz#3115812dbc3dcd156c11fb92c02a17b164d04bce"
+  integrity sha512-gR/BR5aHU4A1MfRDVg2Ys750cfqlfm9PF6lyG9S4g0APOJMFuZj4WtHyYKVwDc11HK1lnj5/q82Uxk1P9+usGA==
 
 minecraft-folder-path@^1.2.0:
   version "1.2.0"
