@@ -27,7 +27,7 @@ const { PlayerState } = require("prismarine-physics");
 
 
 function GoalToPosDist(target: Vec3, origin: Vec3) {
-    return AABBUtils.getEntityAABBRaw({ position: target, height: 1.8, width: 0.6 }).distanceTo(origin);
+    return AABBUtils.getEntityAABBRaw({ position: target, height: 1.8, width: 0.6 }).distanceToVec(origin);
 }
 
 export class JumpPathing extends EventEmitter {
@@ -166,7 +166,7 @@ export class JumpPathing extends EventEmitter {
                 this.simulateJump(bestLandingPos.state, searchDepth - 1, bestLandingPos);
             }
         } else {
-            this.bot.chat("nothing to jump on...");
+            // this.bot.chat("nothing to jump on...");
             this.emit("pathingFailed", "lava_or_water");
         }
     }
